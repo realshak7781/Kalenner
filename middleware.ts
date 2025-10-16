@@ -5,10 +5,10 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 // protecting private routes and allowing only public routes for non authenticated users 
 
 const isPublicRoute = createRouteMatcher([
-    "./",
-    "./login(.*)",
-    "./register(.*)",
-    "./book(.*)"
+    "/",
+    "/login(.*)",
+    "/register(.*)",
+    "/book(.*)"
 ])
 
 export default clerkMiddleware( async (auth,req)=>{
