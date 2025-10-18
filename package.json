@@ -10,6 +10,8 @@
   "dependencies": {
     "@clerk/nextjs": "^6.33.4",
     "@clerk/themes": "^2.4.27",
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "^0.44.6",
     "next": "15.5.5",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -19,6 +21,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
