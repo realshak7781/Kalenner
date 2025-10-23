@@ -108,4 +108,38 @@ export async function updateEvent(
         revalidatePath('/events')
       }
     }
-    
+
+
+      // Infer the type of a row from the EventTable schema
+    type EventRow = typeof eventTable.$inferSelect
+
+   export async function getEvents(clerkUserId: string): Promise<EventRow[]> {
+        // Query the database for events where the clerkUserId matches
+      const events = await db.query.eventTable.findMany({
+    //where: — This defines a filter (a WHERE clause) for your query.
+
+    // ({ clerkUserId: userIdCol }, { eq }) => ... — This is a destructured function:
+
+    // clerkUserId is a variable (likely passed in earlier to the query).
+
+    // userIdCol is a reference to a column in your database (you're just renaming clerkUserId to userIdCol for clarity).
+    where: ({ clerkUserId: userIdCol }, { eq }) => eq(userIdCol, clerkUserId),
+
+    // Events are ordered alphabetically (case-insensitive) by name
+    orderBy: ({ name }, { asc, sql }) => asc(sql`lower(${name})`),
+  })
+
+  return events
+}
+
+
+
+// Fetch a specific event for a given user
+export async function getEvent(userId: string, eventId: string): Promise<EventRow | undefined> {
+  const event = await db.query.eventTable.findFirst({
+    where: ({ id, clerkUserId }, { and, eq }) =>
+      and(eq(clerkUserId, userId), eq(id, eventId)), // Make sure the event belongs to the user
+  })
+
+  return event ?? undefined // Explicitly return undefined if not found
+}
