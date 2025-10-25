@@ -41,7 +41,7 @@ export function ScheduleForm({
             defaultValues: {
             timezone:
                 schedule?.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone,
-            availabilities: schedule?.availabilities.toSorted((a, b) => {
+            availabilities: schedule?.availabilities.sort((a, b) => {
                 return timeToFloat(a.startTime) - timeToFloat(b.startTime)
             }),
             },
